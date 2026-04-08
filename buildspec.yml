@@ -20,7 +20,9 @@ phases:
       - docker build -t my-app .
       - docker tag my-app:latest $REPOSITORY_URI:latest
 
-  post_build:
-    commands:
-      - echo Pushing image to ECR
-      - docker push $REPOSITORY_URI:latest
+post_build:
+  commands:
+    - echo Pushing image to ECR
+    - docker push $REPOSITORY_URI:latest
+    - echo Deploying to EKS
+    - kubectl apply -f k8s/
